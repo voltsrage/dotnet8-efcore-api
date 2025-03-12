@@ -1,0 +1,2 @@
+// Setup Classes in Code
+Scaffold-DbContext "Data Source=DESKTOP-KPOICH0;Initial Catalog=Accommodation;Trusted_Connection=True;Connect Timeout=3000;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Entities -force
