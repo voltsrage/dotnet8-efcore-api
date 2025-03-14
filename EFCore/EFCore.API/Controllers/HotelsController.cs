@@ -1,5 +1,6 @@
 ﻿using EFCore.API.Dtos.Hotels;
 using EFCore.API.Models;
+using EFCore.API.Models.Pagination;
 using EFCore.API.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,24 +19,26 @@ namespace EFCore.API.Controllers
             IHotelService hotelService,
             ILogger<HotelsController> logger)
         {
-            _hotelService = hotelService;
-            _logger = logger;
+            _hotelService = hotelService ?? throw new ArgumentException(nameof(hotelService));
+            _logger = logger ?? throw new ArgumentException(nameof(logger));
         }
 
         /// <summary>
         /// Get all hotels
         /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(typeof(Response<IEnumerable<HotelResponseDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetHotels(CancellationToken  cancellationToken = default)
+        [ProducesResponseType(typeof(Response<PaginatedResult<HotelResponseDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetHotels(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
         {
-            var result = new Response<IEnumerable<HotelResponseDto>>();
+            var result = new Response<PaginatedResult<HotelResponseDto>>();
 
             try
             {
-                result = await _hotelService.GetAllAsync(cancellationToken);
+                result = await _hotelService.GetAllAsync(page, pageSize, cancellationToken);
 
                 if (result.StatusCode != null)
                 {

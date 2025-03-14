@@ -11,7 +11,7 @@ namespace EFCore.API.Data.Repositories
 
         public RoomRepository(AccommodationDBContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentException(nameof(context));
         }
 
         /// <inheritdoc />

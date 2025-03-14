@@ -4,10 +4,12 @@
         <name>EFCore.API</name>
     </assembly>
     <members>
-        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get all hotels
             </summary>
+            <param name="page"></param>
+            <param name="pageSize"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -55,7 +57,7 @@
         <member name="M:EFCore.API.Data.Repositories.HotelRepository.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetAllAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
@@ -75,7 +77,7 @@
             Interface for Hotel Repository
             </summary>
         </member>
-        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetAllAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get all hotels
             </summary>
@@ -774,7 +776,7 @@
         <member name="M:EFCore.API.Services.HotelService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:EFCore.API.Services.HotelService.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Services.HotelService.GetAllAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:EFCore.API.Services.HotelService.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
@@ -794,7 +796,7 @@
             Interface for Hotel Service
             </summary>
         </member>
-        <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetAllAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get all hotels
             </summary>

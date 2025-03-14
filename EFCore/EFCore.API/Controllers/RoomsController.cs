@@ -1,5 +1,6 @@
 ﻿using EFCore.API.Dtos.Rooms;
 using EFCore.API.Models;
+using EFCore.API.Services;
 using EFCore.API.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +19,8 @@ namespace EFCore.API.Controllers
             IRoomService roomService, 
             ILogger<RoomsController> logger)
         {
-            _roomService = roomService;
-            _logger = logger;
+            _roomService = roomService ?? throw new ArgumentException(nameof(roomService));
+            _logger = logger ?? throw new ArgumentException(nameof(logger));
         }
 
         [HttpGet]

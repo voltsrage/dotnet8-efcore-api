@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EFCore.API.Data.Repositories;
 using EFCore.API.Data.Repositories.Interfaces;
 using EFCore.API.Dtos.Rooms;
 using EFCore.API.Entities;
@@ -24,9 +25,9 @@ namespace EFCore.API.Services
             IMapper mapper,
             IHelperFunctions helperFunctions)
         {
-            _roomRepository = roomRepository;
-            _mapper = mapper;
-            _helperFunctions = helperFunctions;
+            _roomRepository = roomRepository ?? throw new ArgumentException(nameof(roomRepository));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
+            _helperFunctions = helperFunctions ?? throw new ArgumentException(nameof(helperFunctions));
         }
 
         ///<inheritdoc/>
