@@ -28,6 +28,9 @@ namespace EFCore.API.Controllers
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
+        /// <param name="searchTerm"></param>
+        /// <param name="sortColumn"></param>
+        /// <param name="sortDirection"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
@@ -36,6 +39,8 @@ namespace EFCore.API.Controllers
             int page = 1, 
             int pageSize = 10,
             string? searchTerm = null,
+            string? sortColumn = "Id",
+            string? sortDirection = "asc",
             CancellationToken cancellationToken = default)
         {
             var result = new Response<PaginatedResult<HotelResponseDto>>();
@@ -46,7 +51,9 @@ namespace EFCore.API.Controllers
                 {
                     Page = page,
                     PageSize = pageSize,
-                    SearchTerm = searchTerm
+                    SearchTerm = searchTerm,
+                    SortColumn = sortColumn,
+                    SortDirection = sortDirection
                 };
 
                 result = await _hotelService.GetAllAsync(pagination, cancellationToken);

@@ -4,7 +4,7 @@
         <name>EFCore.API</name>
     </assembly>
     <members>
-        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Int32,System.Int32,System.String,System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Get all hotels
             </summary>
