@@ -1,0 +1,10 @@
+// Update Database
+
+Open Package Manager Console
+
+// Create Migration
+Add-Migration 'MigrationName'
+
+// Update Database
+Update-Database
+
