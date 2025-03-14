@@ -492,6 +492,18 @@
         <member name="M:EFCore.API.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:EFCore.API.Migrations.AddSeedValuesForHotelsAndRooms">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Migrations.AddSeedValuesForHotelsAndRooms.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Migrations.AddSeedValuesForHotelsAndRooms.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Migrations.AddSeedValuesForHotelsAndRooms.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:EFCore.API.Models.Pagination.PaginatedResult`1">
             <summary>
             Represents a paginated collection of items with metadata

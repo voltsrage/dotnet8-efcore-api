@@ -14,7 +14,7 @@ public class Room : BaseEntity
     /// <summary>
     /// Gets or sets the room number.
     /// </summary>
-    [StringLength(10)]
+    [StringLength(25)]
     public string RoomNumber { get; set; } = string.Empty;
 
     /// <summary>
