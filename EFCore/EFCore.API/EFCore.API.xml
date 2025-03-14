@@ -4,6 +4,191 @@
         <name>EFCore.API</name>
     </assembly>
     <members>
+        <member name="T:EFCore.API.Data.Repositories.HotelRepository">
+            <summary>
+            Hotel Repository
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.CreateAsync(EFCore.API.Entities.Hotel)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetByNameAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetHotelByNameAndAddress(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.UpdateAsync(EFCore.API.Entities.Hotel)">
+            <inheritdoc />
+        </member>
+        <member name="T:EFCore.API.Data.Repositories.Interfaces.IHotelRepository">
+            <summary>
+            Interface for Hotel Repository
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get all hotels
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get hotel by id
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetByNameAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get hotel by name
+            </summary>
+            <param name="name"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetHotelByNameAndAddress(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get hotel by address and name
+            </summary>
+            <param name="name"></param>
+            <param name="address"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.CreateAsync(EFCore.API.Entities.Hotel)">
+            <summary>
+            Create a new hotel
+            </summary>
+            <param name="hotel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.UpdateAsync(EFCore.API.Entities.Hotel)">
+            <summary>
+            Update a hotel
+            </summary>
+            <param name="hotel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Delete a hotel
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EFCore.API.Data.Repositories.Interfaces.IRoomRepository">
+            <summary>
+            Interface for Room Repository
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get all rooms
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get room by id
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.GetByRoomNumberAndHotelIdAsync(System.String,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get room by room number and hotel id
+            </summary>
+            <param name="roomNumber"></param>
+            <param name="hotelId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.GetByHotelIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get room by hotel id
+            </summary>
+            <param name="hotelId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.CreateAsync(EFCore.API.Entities.Room)">
+            <summary>
+            Create a new room
+            </summary>
+            <param name="room"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.UpdateAsync(EFCore.API.Entities.Room)">
+            <summary>
+            Update a room
+            </summary>
+            <param name="room"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.UpdateAvailabilityAsync(System.Int32,System.Boolean)">
+            <summary>
+            Update room availability    
+            </summary>
+            <param name="id"></param>
+            <param name="isAvailable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.GetAllRoomTypesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get all room types
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Delete a room
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.CreateAsync(EFCore.API.Entities.Room)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetAllRoomTypesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetByHotelIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetByRoomNumberAndHotelIdAsync(System.String,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.UpdateAsync(EFCore.API.Entities.Room)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.UpdateAvailabilityAsync(System.Int32,System.Boolean)">
+            <inheritdoc />
+        </member>
         <member name="T:EFCore.API.Entities.BaseModel.BaseEntity">
             <summary>
             Implement base entity
