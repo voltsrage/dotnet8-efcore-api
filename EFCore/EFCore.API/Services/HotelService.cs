@@ -5,6 +5,7 @@ using EFCore.API.Entities;
 using EFCore.API.Enums;
 using EFCore.API.Helpers;
 using EFCore.API.Models;
+using EFCore.API.Models.Pagination;
 using EFCore.API.Services.Interfaces;
 using EFCore.API.Validators;
 
@@ -21,9 +22,9 @@ namespace EFCore.API.Services
             IMapper mapper,
             IHelperFunctions helperFunctions)
         {
-            _hotelRepository = hotelRepository;
-            _mapper = mapper;
-            _helperFunctions = helperFunctions;
+            _hotelRepository = hotelRepository ?? throw new ArgumentException(nameof(hotelRepository));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
+            _helperFunctions = helperFunctions ?? throw new ArgumentException(nameof(helperFunctions));
         }
 
         /// <inheritdoc />
@@ -77,11 +78,20 @@ namespace EFCore.API.Services
         }
 
         /// <inheritdoc />
-        public async Task<Response<IEnumerable<HotelResponseDto>>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PaginatedResult<HotelResponseDto>>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default)
         {
-            var hotels = await _hotelRepository.GetAllAsync(cancellationToken);
+            var paginatedHotels = await _hotelRepository.GetAllAsync(pagination, cancellationToken);
 
-            return Response<IEnumerable<HotelResponseDto>>.Success(_mapper.Map<IEnumerable<HotelResponseDto>>(hotels));
+            var hotelDtos = paginatedHotels.Items.Select(hotel => _mapper.Map<HotelResponseDto>(hotel)).ToList();
+
+            var result = new PaginatedResult<HotelResponseDto>(
+                   hotelDtos,
+                   paginatedHotels.TotalCount,
+                   paginatedHotels.Page,
+                   paginatedHotels.PageSize
+               );
+
+            return Response<PaginatedResult<HotelResponseDto>>.Success(result);
         }
 
         /// <inheritdoc />

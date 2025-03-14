@@ -1,4 +1,5 @@
 ﻿using EFCore.API.Entities;
+using EFCore.API.Models.Pagination;
 
 namespace EFCore.API.Data.Repositories.Interfaces
 {
@@ -10,9 +11,10 @@ namespace EFCore.API.Data.Repositories.Interfaces
         /// <summary>
         /// Get all rooms
         /// </summary>
+        /// <param name="pagination"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IEnumerable<Room>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<PaginatedResult<Room>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get room by id

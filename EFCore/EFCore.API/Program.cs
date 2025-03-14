@@ -11,6 +11,8 @@ using System.Reflection;
 using EFCore.API.Middlewares;
 using System.Text.Json.Serialization;
 using EFCore.API.Helpers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -25,10 +27,16 @@ try
 
     // Add services to the container.
 
-    builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
-    ); 
+    builder.Services.AddControllers(config =>
+    {
+        config.Filters.Add(new ProducesAttribute("application/json", "text/json", "application/xml", "text/xml"));
+        config.ReturnHttpNotAcceptable = true;
+    })
+     .AddJsonOptions(options =>
+         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+     )
+     .AddXmlDataContractSerializerFormatters();
+
 
     #region Ef DbContext
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -96,7 +104,22 @@ try
 
     var app = builder.Build();
 
-    app.UseMiddleware<ExceptionHandlerMiddleware>();
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseMiddleware<ExceptionHandlerMiddleware>();
+    }
+    else
+    {
+        app.UseExceptionHandler(appBuilder =>
+        {
+            appBuilder.Run(async context =>
+            {
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
+            });
+        });
+    }
+ 
 
     app.UseSerilogRequestLogging();
 

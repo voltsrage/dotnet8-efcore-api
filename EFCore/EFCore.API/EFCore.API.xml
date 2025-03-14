@@ -4,10 +4,12 @@
         <name>EFCore.API</name>
     </assembly>
     <members>
-        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
             <summary>
             Get all hotels
             </summary>
+            <param name="page"></param>
+            <param name="pageSize"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -55,7 +57,7 @@
         <member name="M:EFCore.API.Data.Repositories.HotelRepository.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
@@ -75,10 +77,12 @@
             Interface for Hotel Repository
             </summary>
         </member>
-        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <summary>
             Get all hotels
             </summary>
+            <param name="pagination"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
@@ -133,10 +137,11 @@
             Interface for Room Repository
             </summary>
         </member>
-        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <summary>
             Get all rooms
             </summary>
+            <param name="pagination"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -208,7 +213,7 @@
         <member name="M:EFCore.API.Data.Repositories.RoomRepository.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetAllRoomTypesAsync(System.Threading.CancellationToken)">
@@ -540,6 +545,48 @@
             Room delete failed
             </summary>
         </member>
+        <member name="T:EFCore.API.Extensions.QueryableExtensions">
+            <summary>
+            Helper class for pagination and dynamic querying with Entity Framework
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Extensions.QueryableExtensions.ApplyPaginationAsync``1(System.Linq.IQueryable{``0},EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
+            <summary>
+            Applies pagination parameters to an IQueryable
+            </summary>
+            <typeparam name="T">Type of entity</typeparam>
+            <param name="query">The IQueryable to paginate</param>
+            <param name="request">Pagination parameters</param>
+            <returns>A tuple containing the paginated query and the total count</returns>
+        </member>
+        <member name="M:EFCore.API.Extensions.QueryableExtensions.ToPaginatedResultAsync``1(System.Linq.IQueryable{``0},EFCore.API.Models.Pagination.PaginationRequest)">
+            <summary>
+            Creates a paginated result from an IQueryable
+            </summary>
+            <typeparam name="T">Type of entity</typeparam>
+            <param name="query">The IQueryable to paginate</param>
+            <param name="request">Pagination parameters</param>
+            <returns>Paginated result</returns>
+        </member>
+        <member name="M:EFCore.API.Extensions.QueryableExtensions.ApplySearch``1(System.Linq.IQueryable{``0},System.String,System.String[])">
+            <summary>
+            Apply string search to a query
+            </summary>
+            <typeparam name="T">Type of entity</typeparam>
+            <param name="query">The query to filter</param>
+            <param name="searchText">Text to search for</param>
+            <param name="propertyPaths">Names of string properties to search in</param>
+            <returns>The filtered query</returns>
+        </member>
+        <member name="M:EFCore.API.Extensions.QueryableExtensions.ApplyFilters``1(System.Linq.IQueryable{``0},System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Apply dynamic filtering based on a dictionary of conditions
+            </summary>
+            <typeparam name="T">Type of entity</typeparam>
+            <param name="query">The query to filter</param>
+            <param name="filters">Dictionary of property names and filter values</param>
+            <returns>The filtered query</returns>
+        </member>
         <member name="M:EFCore.API.Helpers.HelperFunctions.ProcessValidation``2(FluentValidation.AbstractValidator{``0},``0,EFCore.API.Models.Response{``1})">
             <inheritdoc />/>
         </member>
@@ -774,7 +821,7 @@
         <member name="M:EFCore.API.Services.HotelService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:EFCore.API.Services.HotelService.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Services.HotelService.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:EFCore.API.Services.HotelService.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
@@ -794,10 +841,12 @@
             Interface for Hotel Service
             </summary>
         </member>
-        <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <summary>
             Get all hotels
             </summary>
+            <param name="pagination"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
@@ -853,10 +902,11 @@
             Interface for Room Service
             </summary>
         </member>
-        <member name="M:EFCore.API.Services.Interfaces.IRoomService.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <summary>
             Get all rooms
             </summary>
+            <param name="pagination"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -934,7 +984,7 @@
         <member name="M:EFCore.API.Services.RoomService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
-        <member name="M:EFCore.API.Services.RoomService.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Services.RoomService.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
         <member name="M:EFCore.API.Services.RoomService.GetAllRoomTypesAsync(System.Threading.CancellationToken)">

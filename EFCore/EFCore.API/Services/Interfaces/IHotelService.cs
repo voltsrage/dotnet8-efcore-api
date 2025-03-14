@@ -1,6 +1,7 @@
 ﻿using EFCore.API.Dtos.Hotels;
 using EFCore.API.Entities;
 using EFCore.API.Models;
+using EFCore.API.Models.Pagination;
 
 namespace EFCore.API.Services.Interfaces
 {
@@ -12,8 +13,10 @@ namespace EFCore.API.Services.Interfaces
         /// <summary>
         /// Get all hotels
         /// </summary>
+        /// <param name="pagination"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Response<IEnumerable<HotelResponseDto>>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<Response<PaginatedResult<HotelResponseDto>>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get hotel by id

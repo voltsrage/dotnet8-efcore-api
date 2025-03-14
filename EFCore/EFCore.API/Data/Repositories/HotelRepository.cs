@@ -1,6 +1,8 @@
 ﻿using EFCore.API.Data.Repositories.Interfaces;
 using EFCore.API.Entities;
 using EFCore.API.Enums.StandardEnums;
+using EFCore.API.Extensions;
+using EFCore.API.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCore.API.Data.Repositories
@@ -14,7 +16,7 @@ namespace EFCore.API.Data.Repositories
 
         public HotelRepository(AccommodationDBContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentException(nameof(context));
         }
 
         /// <inheritdoc />
@@ -53,11 +55,20 @@ namespace EFCore.API.Data.Repositories
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<Hotel>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<PaginatedResult<Hotel>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default)
         {
-            return await _context.Hotels
+            var query =  _context.Hotels
                 .Where(h => h.EntityStatusId == (int)EntityStatusEnum.Active)
-                .ToListAsync(cancellationToken);
+                .AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(pagination.SearchTerm))
+            {
+                query = query.ApplySearch(pagination.SearchTerm, "Name","Country","City");
+            }
+
+            var paginatedHotels = await query.ToPaginatedResultAsync(pagination);
+
+            return paginatedHotels;
         }
 
         /// <inheritdoc />

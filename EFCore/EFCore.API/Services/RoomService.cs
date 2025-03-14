@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using EFCore.API.Data.Repositories;
 using EFCore.API.Data.Repositories.Interfaces;
+using EFCore.API.Dtos.Hotels;
 using EFCore.API.Dtos.Rooms;
 using EFCore.API.Entities;
 using EFCore.API.Enums;
 using EFCore.API.Helpers;
 using EFCore.API.Models;
+using EFCore.API.Models.Pagination;
 using EFCore.API.Services.Interfaces;
 using EFCore.API.Validators;
 
@@ -24,9 +27,9 @@ namespace EFCore.API.Services
             IMapper mapper,
             IHelperFunctions helperFunctions)
         {
-            _roomRepository = roomRepository;
-            _mapper = mapper;
-            _helperFunctions = helperFunctions;
+            _roomRepository = roomRepository ?? throw new ArgumentException(nameof(roomRepository));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
+            _helperFunctions = helperFunctions ?? throw new ArgumentException(nameof(helperFunctions));
         }
 
         ///<inheritdoc/>
@@ -81,12 +84,20 @@ namespace EFCore.API.Services
         }
 
         ///<inheritdoc/>
-        public async Task<Response<IEnumerable<RoomResponseDto>>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PaginatedResult<RoomResponseDto>>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default)
         {
-            var rooms = await _roomRepository.GetAllAsync(cancellationToken);
+            var paginatedRooms = await _roomRepository.GetAllAsync(pagination, cancellationToken);
 
-            return Response<IEnumerable<RoomResponseDto>>.Success(
-                _mapper.Map<IEnumerable<RoomResponseDto>>(rooms));
+            var hotelDtos = paginatedRooms.Items.Select(hotel => _mapper.Map<RoomResponseDto>(hotel)).ToList();
+
+            var result = new PaginatedResult<RoomResponseDto>(
+                   hotelDtos,
+                   paginatedRooms.TotalCount,
+                   paginatedRooms.Page,
+                   paginatedRooms.PageSize
+               );
+
+            return Response<PaginatedResult<RoomResponseDto>>.Success(result);
         }
 
         ///<inheritdoc/>
