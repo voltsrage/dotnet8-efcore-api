@@ -1,6 +1,7 @@
 ﻿using EFCore.API.Data.Repositories.Interfaces;
 using EFCore.API.Entities;
 using EFCore.API.Enums.StandardEnums;
+using EFCore.API.Extensions;
 using EFCore.API.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,28 +55,22 @@ namespace EFCore.API.Data.Repositories
         }
 
         /// <inheritdoc />
-        public async Task<(IEnumerable<Hotel> items, int totalCount)> GetAllAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+        public async Task<PaginatedResult<Hotel>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default)
         {
-            if(page < 1)
-            {
-                page = 1;
-            }
+            var collections =  _context.Hotels
+                .Where(h => h.EntityStatusId == (int)EntityStatusEnum.Active)
+                .AsQueryable();
 
-            if (pageSize < 1)
-            {
-                pageSize = 10;
-            }
+            //var totalCount = await collections.CountAsync();
 
-            var collections =  _context.Hotels.Where(h => h.EntityStatusId == (int)EntityStatusEnum.Active) as IQueryable<Hotel>;
+            //var collectionToReturn =  await _context.Hotels
+            //    .Skip((page - 1) * pageSize)
+            //    .Take(pageSize)
+            //    .ToListAsync(cancellationToken);
 
-            var totalCount = await collections.CountAsync();
+            var paginatedHotels = await collections.ToPaginatedResultAsync(pagination);
 
-            var collectionToReturn =  await _context.Hotels
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync(cancellationToken);
-
-            return (collectionToReturn,totalCount);
+            return paginatedHotels;
         }
 
         /// <inheritdoc />

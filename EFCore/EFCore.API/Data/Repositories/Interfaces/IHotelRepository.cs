@@ -12,7 +12,7 @@ namespace EFCore.API.Data.Repositories.Interfaces
         /// Get all hotels
         /// </summary>
         /// <returns></returns>
-        Task<(IEnumerable<Hotel> items,  int totalCount)> GetAllAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+        Task<PaginatedResult<Hotel>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get hotel by id

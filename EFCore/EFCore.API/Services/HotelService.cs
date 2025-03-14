@@ -78,13 +78,20 @@ namespace EFCore.API.Services
         }
 
         /// <inheritdoc />
-        public async Task<Response<PaginatedResult<HotelResponseDto>>> GetAllAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+        public async Task<Response<PaginatedResult<HotelResponseDto>>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default)
         {
-            var hotels = await _hotelRepository.GetAllAsync(page, pageSize, cancellationToken);
+            var paginatedHotels = await _hotelRepository.GetAllAsync(pagination, cancellationToken);
 
-            var hotelsToReturn = new PaginatedResult<HotelResponseDto>(_mapper.Map<List<HotelResponseDto>>(hotels.items),hotels.totalCount,page,pageSize);
+            var hotelDtos = paginatedHotels.Items.Select(hotel => _mapper.Map<HotelResponseDto>(hotel)).ToList();
 
-            return Response<PaginatedResult<HotelResponseDto>>.Success(hotelsToReturn);
+            var result = new PaginatedResult<HotelResponseDto>(
+                   hotelDtos,
+                   paginatedHotels.TotalCount,
+                   paginatedHotels.Page,
+                   paginatedHotels.PageSize
+               );
+
+            return Response<PaginatedResult<HotelResponseDto>>.Success(result);
         }
 
         /// <inheritdoc />

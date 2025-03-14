@@ -14,7 +14,7 @@ namespace EFCore.API.Services.Interfaces
         /// Get all hotels
         /// </summary>
         /// <returns></returns>
-        Task<Response<PaginatedResult<HotelResponseDto>>> GetAllAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+        Task<Response<PaginatedResult<HotelResponseDto>>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get hotel by id

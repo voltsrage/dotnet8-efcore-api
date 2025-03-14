@@ -38,7 +38,13 @@ namespace EFCore.API.Controllers
 
             try
             {
-                result = await _hotelService.GetAllAsync(page, pageSize, cancellationToken);
+                var pagination = new PaginationRequest
+                {
+                    Page = page,
+                    PageSize = pageSize
+                };
+
+                result = await _hotelService.GetAllAsync(pagination, cancellationToken);
 
                 if (result.StatusCode != null)
                 {
