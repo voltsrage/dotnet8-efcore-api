@@ -1,4 +1,5 @@
-﻿using EFCore.API.Data.Repositories.Interfaces;
+﻿using Azure.Core;
+using EFCore.API.Data.Repositories.Interfaces;
 using EFCore.API.Entities;
 using EFCore.API.Enums.StandardEnums;
 using EFCore.API.Extensions;
@@ -64,6 +65,12 @@ namespace EFCore.API.Data.Repositories
             if(!string.IsNullOrWhiteSpace(pagination.SearchTerm))
             {
                 query = query.ApplySearch(pagination.SearchTerm, "Name","Country","City");
+            }
+
+            // Apply filters
+            if (pagination.HasFilters)
+            {
+                query = query.ApplyFilters(pagination.Filters);
             }
 
             var paginatedHotels = await query.ToPaginatedResultAsync(pagination);

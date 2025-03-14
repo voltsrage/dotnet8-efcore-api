@@ -63,6 +63,12 @@ namespace EFCore.API.Data.Repositories
                 query = query.ApplySearch(pagination.SearchTerm, "RoomNumber", "Hotel.Country", "Hotel.City");
             }
 
+            // Apply filters
+            if (pagination.HasFilters)
+            {
+                query = query.ApplyFilters(pagination.Filters);
+            }
+
             var paginatedRooms = await query.ToPaginatedResultAsync(pagination);
 
             return paginatedRooms;

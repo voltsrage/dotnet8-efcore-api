@@ -24,12 +24,32 @@ namespace EFCore.API.Controllers
             _logger = logger ?? throw new ArgumentException(nameof(logger));
         }
 
+        /// <summary>
+        /// Get all rooms
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchTerm"></param>
+        /// <param name="sortColumn"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="hotelId">Optional hotel ID filter</param>
+        /// <param name="roomTypeId">Optional room type ID filter</param> 
+        /// <param name="minPrice">Minimum price per night</param>
+        /// <param name="maxPrice">Maximum price per night</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(Response<PaginatedResult<RoomResponseDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetRooms(
             int page = 1,
             int pageSize = 10,
             string? searchTerm = null,
+            string? sortColumn = "Id",
+            string? sortDirection = "asc",
+            int? hotelId = null,
+            int? roomTypeId = null,
+            decimal? minPrice = null,
+            decimal? maxPrice = null,
             CancellationToken cancellationToken = default)
         {
             var result = new Response<PaginatedResult<RoomResponseDto>>();
@@ -39,8 +59,23 @@ namespace EFCore.API.Controllers
                 {
                     Page = page,
                     PageSize = pageSize,
-                    SearchTerm = searchTerm
+                    SearchTerm = searchTerm,
+                    SortColumn = sortColumn,
+                    SortDirection = sortDirection,
+                    Filters = new Dictionary<string, string>()
                 };
+
+                if (hotelId.HasValue)
+                    pagination.Filters.Add("hotelId", hotelId.Value.ToString());
+
+                if (roomTypeId.HasValue)
+                    pagination.Filters.Add("roomTypeId", roomTypeId.Value.ToString());
+
+                if (minPrice.HasValue)
+                    pagination.Filters.Add("pricePerNight__gte", minPrice.Value.ToString());
+
+                if (maxPrice.HasValue)
+                    pagination.Filters.Add("pricePerNight__lte", maxPrice.Value.ToString());
 
                 result = await _roomService.GetAllAsync(pagination,cancellationToken);
                 if (result.StatusCode != null)
@@ -57,6 +92,12 @@ namespace EFCore.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Get room by id
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("{roomId}")]
         [ProducesResponseType(typeof(Response<RoomResponseDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status404NotFound)]
@@ -80,6 +121,12 @@ namespace EFCore.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Get rooms by hotel id
+        /// </summary>
+        /// <param name="hotelId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("hotel/{hotelId}")]
         [ProducesResponseType(typeof(Response<IEnumerable<RoomResponseDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetRoomsByHotelId(int hotelId, CancellationToken cancellationToken)
@@ -102,6 +149,12 @@ namespace EFCore.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Create a new room
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(Response<RoomResponseDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
@@ -125,6 +178,13 @@ namespace EFCore.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Update a room
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="room"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("{roomId}")]
         [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
@@ -148,6 +208,13 @@ namespace EFCore.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Update room availability
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="isAvailable"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("{roomId}/availability")]
         [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
@@ -171,6 +238,11 @@ namespace EFCore.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all room types
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("types")]
         [ProducesResponseType(typeof(Response<IEnumerable<RoomTypeResponseDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetRoomTypes(CancellationToken cancellationToken)
@@ -193,6 +265,12 @@ namespace EFCore.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete a room
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpDelete("{roomId}")]
         [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]

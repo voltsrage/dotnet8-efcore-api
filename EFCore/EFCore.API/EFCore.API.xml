@@ -4,12 +4,17 @@
         <name>EFCore.API</name>
     </assembly>
     <members>
-        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Get all hotels
             </summary>
             <param name="page"></param>
             <param name="pageSize"></param>
+            <param name="searchTerm"></param>
+            <param name="sortColumn"></param>
+            <param name="sortDirection"></param>
+            <param name="country"></param>
+            <param name="city"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -43,6 +48,79 @@
             Delete a hotel
             </summary>
             <param name="hotelId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.RoomsController.GetRooms(System.Int32,System.Int32,System.String,System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Threading.CancellationToken)">
+            <summary>
+            Get all rooms
+            </summary>
+            <param name="page"></param>
+            <param name="pageSize"></param>
+            <param name="searchTerm"></param>
+            <param name="sortColumn"></param>
+            <param name="sortDirection"></param>
+            <param name="hotelId">Optional hotel ID filter</param>
+            <param name="roomTypeId">Optional room type ID filter</param> 
+            <param name="minPrice">Minimum price per night</param>
+            <param name="maxPrice">Maximum price per night</param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.RoomsController.GetRoomById(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get room by id
+            </summary>
+            <param name="roomId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.RoomsController.GetRoomsByHotelId(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get rooms by hotel id
+            </summary>
+            <param name="hotelId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.RoomsController.CreateRoom(EFCore.API.Dtos.Rooms.RoomCreateDto,System.Threading.CancellationToken)">
+            <summary>
+            Create a new room
+            </summary>
+            <param name="room"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.RoomsController.UpdateRoom(System.Int32,EFCore.API.Dtos.Rooms.RoomUpdateDto,System.Threading.CancellationToken)">
+            <summary>
+            Update a room
+            </summary>
+            <param name="roomId"></param>
+            <param name="room"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.RoomsController.UpdateRoomAvailability(System.Int32,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Update room availability
+            </summary>
+            <param name="roomId"></param>
+            <param name="isAvailable"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.RoomsController.GetRoomTypes(System.Threading.CancellationToken)">
+            <summary>
+            Get all room types
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.RoomsController.DeleteRoom(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Delete a room
+            </summary>
+            <param name="roomId"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
