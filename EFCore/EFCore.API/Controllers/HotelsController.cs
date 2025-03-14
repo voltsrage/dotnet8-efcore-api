@@ -1,4 +1,5 @@
-﻿using EFCore.API.Dtos.Hotels;
+﻿using Azure.Core;
+using EFCore.API.Dtos.Hotels;
 using EFCore.API.Models;
 using EFCore.API.Models.Pagination;
 using EFCore.API.Services.Interfaces;
@@ -31,6 +32,8 @@ namespace EFCore.API.Controllers
         /// <param name="searchTerm"></param>
         /// <param name="sortColumn"></param>
         /// <param name="sortDirection"></param>
+        /// <param name="country"></param>
+        /// <param name="city"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
@@ -41,6 +44,8 @@ namespace EFCore.API.Controllers
             string? searchTerm = null,
             string? sortColumn = "Id",
             string? sortDirection = "asc",
+            string? country = null,
+            string? city = null,
             CancellationToken cancellationToken = default)
         {
             var result = new Response<PaginatedResult<HotelResponseDto>>();
@@ -53,8 +58,15 @@ namespace EFCore.API.Controllers
                     PageSize = pageSize,
                     SearchTerm = searchTerm,
                     SortColumn = sortColumn,
-                    SortDirection = sortDirection
+                    SortDirection = sortDirection,
+                    Filters = new Dictionary<string, string>()
                 };
+
+                if (!string.IsNullOrEmpty(country))
+                    pagination.Filters.Add("country", country);
+
+                if (!string.IsNullOrEmpty(city))
+                    pagination.Filters.Add("city", city);
 
                 result = await _hotelService.GetAllAsync(pagination, cancellationToken);
 

@@ -32,6 +32,10 @@ namespace EFCore.API.Controllers
         /// <param name="searchTerm"></param>
         /// <param name="sortColumn"></param>
         /// <param name="sortDirection"></param>
+        /// <param name="hotelId">Optional hotel ID filter</param>
+        /// <param name="roomTypeId">Optional room type ID filter</param> 
+        /// <param name="minPrice">Minimum price per night</param>
+        /// <param name="maxPrice">Maximum price per night</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
@@ -42,6 +46,10 @@ namespace EFCore.API.Controllers
             string? searchTerm = null,
             string? sortColumn = "Id",
             string? sortDirection = "asc",
+            int? hotelId = null,
+            int? roomTypeId = null,
+            decimal? minPrice = null,
+            decimal? maxPrice = null,
             CancellationToken cancellationToken = default)
         {
             var result = new Response<PaginatedResult<RoomResponseDto>>();
@@ -53,8 +61,21 @@ namespace EFCore.API.Controllers
                     PageSize = pageSize,
                     SearchTerm = searchTerm,
                     SortColumn = sortColumn,
-                    SortDirection = sortDirection
+                    SortDirection = sortDirection,
+                    Filters = new Dictionary<string, string>()
                 };
+
+                if (hotelId.HasValue)
+                    pagination.Filters.Add("hotelId", hotelId.Value.ToString());
+
+                if (roomTypeId.HasValue)
+                    pagination.Filters.Add("roomTypeId", roomTypeId.Value.ToString());
+
+                if (minPrice.HasValue)
+                    pagination.Filters.Add("pricePerNight__gte", minPrice.Value.ToString());
+
+                if (maxPrice.HasValue)
+                    pagination.Filters.Add("pricePerNight__lte", maxPrice.Value.ToString());
 
                 result = await _roomService.GetAllAsync(pagination,cancellationToken);
                 if (result.StatusCode != null)
