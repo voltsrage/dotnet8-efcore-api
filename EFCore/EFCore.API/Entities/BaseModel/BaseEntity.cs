@@ -16,12 +16,6 @@ namespace EFCore.API.Entities.BaseModel
         public int Id { get; set; }
 
         /// <summary>
-        /// Guid of entity
-        /// </summary>
-        [StringLength(36)]
-        public string Guid { get; set; } = System.Guid.NewGuid().ToString();
-
-        /// <summary>
         /// Displays the status of the Entity e.g. deleted, active e.g. 
         /// </summary>
         public int EntityStatusId { get; set; } = 1;

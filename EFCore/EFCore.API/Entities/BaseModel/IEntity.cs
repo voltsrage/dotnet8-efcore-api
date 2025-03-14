@@ -7,24 +7,9 @@ namespace EFCore.API.Entities.BaseModel
     public interface IEntity
     {
         /// <summary>
-        /// Create time timestamp
-        /// </summary>
-        long CreateAt { get; set; }
-
-        /// <summary>
-        /// Creator of record
-        /// </summary>
-        int? CreateBy { get; set; }
-
-        /// <summary>
         /// Id of entity
         /// </summary>
         int Id { get; set; }
-
-        /// <summary>
-        /// Guid of entity
-        /// </summary>
-        string Guid { get; set; }
 
         /// <summary>
         /// Displays the status of the Entity e.g. deleted, active e.g. 

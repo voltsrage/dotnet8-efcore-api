@@ -1,4 +1,6 @@
 ﻿using EFCore.API.Entities.BaseModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EFCore.API.Entities;
 
@@ -12,6 +14,7 @@ public class Room : BaseEntity
     /// <summary>
     /// Gets or sets the room number.
     /// </summary>
+    [StringLength(10)]
     public string RoomNumber { get; set; } = string.Empty;
 
     /// <summary>
@@ -22,6 +25,7 @@ public class Room : BaseEntity
     /// <summary>
     /// Gets or sets the price per night for the room.
     /// </summary>
+    [Column(TypeName = "decimal(6, 2)")]
     public decimal PricePerNight { get; set; }
 
     /// <summary>

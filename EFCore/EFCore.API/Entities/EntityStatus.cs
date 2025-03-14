@@ -1,21 +1,21 @@
-﻿using System;
+﻿using EFCore.API.Entities.BaseModel;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EFCore.API.Entities;
 
-public partial class EntityStatus
+public class EntityStatus: BaseEntity
 {
-    public int Id { get; set; }
-
+    /// <summary>
+    /// Name of the status
+    /// </summary>
+    [StringLength(100)]
     public string Name { get; set; } = null!;
 
+    /// <summary>
+    /// Description of the status
+    /// </summary>
+    [StringLength(200)]
     public string Description { get; set; } = null!;
-
-    public DateTime? CreatedAt { get; set; }
-
-    public int CreatedBy { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public int UpdatedBy { get; set; }
 }
