@@ -11,6 +11,8 @@ namespace EFCore.API.Data.Repositories.Interfaces
         /// <summary>
         /// Get all hotels
         /// </summary>
+        /// <param name="pagination"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<PaginatedResult<Hotel>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default);
 

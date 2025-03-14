@@ -1,6 +1,8 @@
 ﻿using EFCore.API.Data.Repositories.Interfaces;
 using EFCore.API.Entities;
 using EFCore.API.Enums.StandardEnums;
+using EFCore.API.Extensions;
+using EFCore.API.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCore.API.Data.Repositories
@@ -48,12 +50,22 @@ namespace EFCore.API.Data.Repositories
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<Room>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<PaginatedResult<Room>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default)
         {
-            return await _context.Rooms
+            var query =  _context.Rooms
                 .Include(h => h.RoomType)
+                .Include(h => h.Hotel)
                 .Where(r => r.EntityStatusId == (int)EntityStatusEnum.Active)
-                .ToListAsync(cancellationToken);
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.SearchTerm))
+            {
+                query = query.ApplySearch(pagination.SearchTerm, "RoomNumber", "Hotel.Country", "Hotel.City");
+            }
+
+            var paginatedRooms = await query.ToPaginatedResultAsync(pagination);
+
+            return paginatedRooms;
         }
 
         /// <inheritdoc />

@@ -4,7 +4,7 @@
         <name>EFCore.API</name>
     </assembly>
     <members>
-        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Int32,System.Int32,System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
             <summary>
             Get all hotels
             </summary>
@@ -81,6 +81,8 @@
             <summary>
             Get all hotels
             </summary>
+            <param name="pagination"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
@@ -135,10 +137,11 @@
             Interface for Room Repository
             </summary>
         </member>
-        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IRoomRepository.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <summary>
             Get all rooms
             </summary>
+            <param name="pagination"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -210,7 +213,7 @@
         <member name="M:EFCore.API.Data.Repositories.RoomRepository.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
-        <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:EFCore.API.Data.Repositories.RoomRepository.GetAllRoomTypesAsync(System.Threading.CancellationToken)">
@@ -572,7 +575,7 @@
             <typeparam name="T">Type of entity</typeparam>
             <param name="query">The query to filter</param>
             <param name="searchText">Text to search for</param>
-            <param name="propertyNames">Names of string properties to search in</param>
+            <param name="propertyPaths">Names of string properties to search in</param>
             <returns>The filtered query</returns>
         </member>
         <member name="M:EFCore.API.Extensions.QueryableExtensions.ApplyFilters``1(System.Linq.IQueryable{``0},System.Collections.Generic.Dictionary{System.String,System.String})">
@@ -842,6 +845,8 @@
             <summary>
             Get all hotels
             </summary>
+            <param name="pagination"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
@@ -897,10 +902,11 @@
             Interface for Room Service
             </summary>
         </member>
-        <member name="M:EFCore.API.Services.Interfaces.IRoomService.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <summary>
             Get all rooms
             </summary>
+            <param name="pagination"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -978,7 +984,7 @@
         <member name="M:EFCore.API.Services.RoomService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
-        <member name="M:EFCore.API.Services.RoomService.GetAllAsync(System.Threading.CancellationToken)">
+        <member name="M:EFCore.API.Services.RoomService.GetAllAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
         <member name="M:EFCore.API.Services.RoomService.GetAllRoomTypesAsync(System.Threading.CancellationToken)">

@@ -1,5 +1,6 @@
 ﻿using EFCore.API.Dtos.Rooms;
 using EFCore.API.Models;
+using EFCore.API.Models.Pagination;
 using EFCore.API.Services;
 using EFCore.API.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -24,13 +25,24 @@ namespace EFCore.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(Response<IEnumerable<RoomResponseDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetRooms(CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(Response<PaginatedResult<RoomResponseDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetRooms(
+            int page = 1,
+            int pageSize = 10,
+            string? searchTerm = null,
+            CancellationToken cancellationToken = default)
         {
-            var result = new Response<IEnumerable<RoomResponseDto>>();
+            var result = new Response<PaginatedResult<RoomResponseDto>>();
             try
             {
-                result = await _roomService.GetAllAsync(cancellationToken);
+                var pagination = new PaginationRequest
+                {
+                    Page = page,
+                    PageSize = pageSize,
+                    SearchTerm = searchTerm
+                };
+
+                result = await _roomService.GetAllAsync(pagination,cancellationToken);
                 if (result.StatusCode != null)
                 {
                     return StatusCode(result.StatusCode.Value, result);

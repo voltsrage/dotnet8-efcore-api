@@ -57,18 +57,16 @@ namespace EFCore.API.Data.Repositories
         /// <inheritdoc />
         public async Task<PaginatedResult<Hotel>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default)
         {
-            var collections =  _context.Hotels
+            var query =  _context.Hotels
                 .Where(h => h.EntityStatusId == (int)EntityStatusEnum.Active)
                 .AsQueryable();
 
-            //var totalCount = await collections.CountAsync();
+            if(!string.IsNullOrWhiteSpace(pagination.SearchTerm))
+            {
+                query = query.ApplySearch(pagination.SearchTerm, "Name","Country","City");
+            }
 
-            //var collectionToReturn =  await _context.Hotels
-            //    .Skip((page - 1) * pageSize)
-            //    .Take(pageSize)
-            //    .ToListAsync(cancellationToken);
-
-            var paginatedHotels = await collections.ToPaginatedResultAsync(pagination);
+            var paginatedHotels = await query.ToPaginatedResultAsync(pagination);
 
             return paginatedHotels;
         }

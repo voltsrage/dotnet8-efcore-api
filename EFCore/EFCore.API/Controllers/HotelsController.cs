@@ -32,7 +32,11 @@ namespace EFCore.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(Response<PaginatedResult<HotelResponseDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetHotels(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetHotels(
+            int page = 1, 
+            int pageSize = 10,
+            string? searchTerm = null,
+            CancellationToken cancellationToken = default)
         {
             var result = new Response<PaginatedResult<HotelResponseDto>>();
 
@@ -41,7 +45,8 @@ namespace EFCore.API.Controllers
                 var pagination = new PaginationRequest
                 {
                     Page = page,
-                    PageSize = pageSize
+                    PageSize = pageSize,
+                    SearchTerm = searchTerm
                 };
 
                 result = await _hotelService.GetAllAsync(pagination, cancellationToken);
