@@ -11,7 +11,7 @@ namespace EFCore.API.Configure
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "EF Core API",
+                    Title = "EF Core API DB First",
                     Version = "v1",
                     Description = "API to display how to builder a Ef Core API",
                     Contact = new OpenApiContact
