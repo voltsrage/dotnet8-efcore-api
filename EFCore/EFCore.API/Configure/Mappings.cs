@@ -23,8 +23,12 @@ namespace EFCore.API.Configure
 
             CreateMap<Room, RoomUpdateDto>()
                 .ReverseMap();
-
+                
             CreateMap<Room, RoomResponseDto>()
+                .ForMember(dest => dest.RoomTypeName, opt => opt.MapFrom(src => src.RoomType.Name))
+                .ReverseMap();
+
+            CreateMap<RoomType, RoomTypeResponseDto>()
                 .ReverseMap();
         }
     }

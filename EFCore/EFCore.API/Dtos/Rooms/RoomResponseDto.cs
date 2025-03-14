@@ -10,6 +10,6 @@
         public decimal PricePerNight { get; set; }
         public bool IsAvailable { get; set; }
         public int MaxOccupancy { get; set; }
-        public DateTime CreateAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

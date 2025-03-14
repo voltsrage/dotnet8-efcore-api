@@ -49,9 +49,7 @@ namespace EFCore.API.Services
 
             if (existingRoom != null)
             {
-                result.IsSuccess = false;
-                result.StatusCode = SystemCodeEnum.RoomAlreadyExists.Value;
-                return result;
+                return Response<RoomResponseDto>.Failure(SystemCodeEnum.RoomAlreadyExists);
             }
 
             var newRoom = _mapper.Map<Room>(room);
