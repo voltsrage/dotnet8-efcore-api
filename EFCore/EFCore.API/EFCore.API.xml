@@ -1,0 +1,496 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EFCore.API</name>
+    </assembly>
+    <members>
+        <member name="T:EFCore.API.Entities.BaseModel.BaseEntity">
+            <summary>
+            Implement base entity
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.BaseEntity.Id">
+            <summary>
+            Id of entity
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.BaseEntity.EntityStatusId">
+            <summary>
+            Displays the status of the Entity e.g. deleted, active e.g. 
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.BaseEntity.CreatedAt">
+            <summary>
+            CreateAt    
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.BaseEntity.UpdatedAt">
+            <summary>
+            When this record is updated
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.BaseEntity.CreatedBy">
+            <summary>
+            who create this record
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.BaseEntity.UpdatedBy">
+            <summary>
+            who update this record
+            </summary>
+        </member>
+        <member name="T:EFCore.API.Entities.BaseModel.IEntity">
+            <summary>
+            Base entity interface
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.IEntity.Id">
+            <summary>
+            Id of entity
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.IEntity.EntityStatusId">
+            <summary>
+            Displays the status of the Entity e.g. deleted, active e.g. 
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.IEntity.CreatedAt">
+            <summary>
+            CreateAt    
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.IEntity.UpdatedAt">
+            <summary>
+            When this record is updated
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.IEntity.CreatedBy">
+            <summary>
+            who create this record
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.BaseModel.IEntity.UpdatedBy">
+            <summary>
+            who update this record
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.EntityStatus.Name">
+            <summary>
+            Name of the status
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.EntityStatus.Description">
+            <summary>
+            Description of the status
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Hotel.Name">
+            <summary>
+            Gets or sets the name of the hotel.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Hotel.Address">
+            <summary>
+            Gets or sets the address of the hotel.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Hotel.City">
+            <summary>
+            Gets or sets the city where the hotel is located.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Hotel.Country">
+            <summary>
+            Gets or sets the country where the hotel is located.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Hotel.PhoneNumber">
+            <summary>
+            Gets or sets the phone number of the hotel.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Hotel.Email">
+            <summary>
+            Gets or sets the email address of the hotel.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Hotel.Rooms">
+            <summary>
+            List of rooms in the hotel
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Room.HotelId">
+            <summary>
+            Gets or sets the unique identifier of the hotel to which the room belongs.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Room.RoomNumber">
+            <summary>
+            Gets or sets the room number.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Room.RoomTypeId">
+            <summary>
+            Gets or sets the type of the room (e.g., Standard, Deluxe, Suite).
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Room.PricePerNight">
+            <summary>
+            Gets or sets the price per night for the room.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Room.IsAvailable">
+            <summary>
+            Gets or sets a value indicating whether the room is available.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.Room.MaxOccupancy">
+            <summary>
+            Gets or sets the maximum number of guests that can occupy the room.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:EFCore.API.Entities.RoomType.Name" -->
+        <member name="P:EFCore.API.Entities.RoomType.Description">
+            <summary>
+            Description of room type
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Entities.RoomType.Rooms">
+            <summary>
+            List of rooms of this room type
+            </summary>
+        </member>
+        <member name="T:EFCore.API.Enums.SystemCodeEnum">
+            <summary>
+            Allows developer to create error codes for system logic in a central place
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelCreated">
+            <summary>
+            Hotel created successfully
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelUpdated">
+            <summary>
+            Hotel updated successfully
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelDeleted">
+            <summary>
+            Hotel deleted successfully
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelNotFound">
+            <summary>
+            Hotel not found
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelAlreadyExists">
+            <summary>
+            Hotel already exists
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.InvalidHotelData">
+            <summary>
+            Invalid hotel data
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelHasActiveRooms">
+            <summary>
+            Unable to delete hotel with active rooms
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.InvalidHotelContactInfo">
+            <summary>
+            Invalid hotel contact information
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelCapacityExceeded">
+            <summary>
+            Hotel capacity exceeded
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelCreationFailed">
+            <summary>
+            Hotel creation failed
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.NoHotelsToCreate">
+            <summary>
+            No hotels to create in bulk
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelBulkCreateValidationError">
+            <summary>
+            Validation failed for one or more hotels
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomCreated">
+            <summary>
+            Room created successfully
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomUpdated">
+            <summary>
+            Room updated successfully
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomDeleted">
+            <summary>
+            Room deleted successfully
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomStatusChanged">
+            <summary>
+            Room status changed successfully
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomNotFound">
+            <summary>
+            Room not found
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomAlreadyExists">
+            <summary>
+            Room already exists
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.InvalidRoomData">
+            <summary>
+            Invalid room data
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomOccupied">
+            <summary>
+            Room is currently occupied
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomUnderMaintenance">
+            <summary>
+            Room is under maintenance
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomCapacityExceeded">
+            <summary>
+            Room capacity exceeded
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomNotAvailable">
+            <summary>
+            Room is not available for booking
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.InvalidRoomPrice">
+            <summary>
+            Invalid room price
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomBelongsToDifferentHotel">
+            <summary>
+            Room belongs to a different hotel
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomCreationFailed">
+            <summary>
+            Room creation failed
+            </summary>
+        </member>
+        <member name="T:EFCore.API.Migrations.InitialMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Migrations.InitialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Migrations.InitialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:EFCore.API.Models.Pagination.PaginatedResult`1">
+            <summary>
+            Represents a paginated collection of items with metadata
+            </summary>
+            <typeparam name="T">The type of items in the collection</typeparam>
+        </member>
+        <member name="M:EFCore.API.Models.Pagination.PaginatedResult`1.#ctor(System.Collections.Generic.List{`0},System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the PaginatedResult class
+            </summary>
+            <param name="items">The items on the current page</param>
+            <param name="totalCount">The total number of items across all pages</param>
+            <param name="page">The current page (1-based)</param>
+            <param name="pageSize">The number of items per page</param>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginatedResult`1.Items">
+            <summary>
+            The items on the current page
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginatedResult`1.Page">
+            <summary>
+            The current page number (1-based)
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginatedResult`1.PageSize">
+            <summary>
+            The number of items per page
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginatedResult`1.TotalCount">
+            <summary>
+            The total number of items across all pages
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginatedResult`1.TotalPages">
+            <summary>
+            The total number of pages
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginatedResult`1.HasNextPage">
+            <summary>
+            Whether there is a page after the current page
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginatedResult`1.HasPreviousPage">
+            <summary>
+            Whether there is a page before the current page
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Models.Pagination.PaginatedResult`1.Empty(System.Int32,System.Int32)">
+            <summary>
+            Creates an empty paged result
+            </summary>
+            <param name="page">Current page number</param>
+            <param name="pageSize">Number of items per page</param>
+            <returns>Empty paged result</returns>
+        </member>
+        <member name="T:EFCore.API.Models.Pagination.PaginationRequest">
+            <summary>
+            Represents a request for paginated data
+            </summary>   
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.Page">
+            <summary>
+            Current page number (1-based)
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.PageSize">
+            <summary>
+            Number of items per page (default: 10, max: 100)
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.SearchTerm">
+            <summary>
+            Optional search term to filter results
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.Skip">
+            <summary>
+            Number of records to skip
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.HasSearch">
+            <summary>
+            Indicates if a search term is provided
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.SortColumn">
+            <summary>
+            Optional column to sort by
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.SortDirection">
+            <summary>
+            Sort direction (asc or desc)
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.HasSorting">
+            <summary>
+            Indicates if sorting is specified
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.IsAscending">
+            <summary>
+            Indicates if sort direction is ascending
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.Filters">
+            <summary>
+            Dictionary of field-specific filters
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Pagination.PaginationRequest.HasFilters">
+            <summary>
+            Indicates whether there are filters specified
+            </summary>
+        </member>
+        <member name="T:EFCore.API.Models.Response">
+            <summary>
+            Response wrapper for API Endpoints
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Response.IsSuccess">
+            <summary>
+            是否成功回傳
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Response.ErrorMessage">
+            <summary>
+            IsSuccess為false，顯示錯誤訊息
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Response.SuccessMessage">
+            <summary>
+            IsSuccess為true，顯示訊息
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Response.ErrorCode">
+            <summary>
+            Custom error code
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Response.StatusCode">
+            <summary>
+            Http Status Code
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.Response.ValidationErrors">
+            <summary>
+            List of validation errors
+            </summary>
+        </member>
+        <member name="T:EFCore.API.Models.Response`1">
+            <summary>
+            回傳資料格式，泛型
+            </summary>
+            <typeparam name="T">資料內容</typeparam>
+        </member>
+        <member name="P:EFCore.API.Models.Response`1.Content">
+            <summary>
+            資料內容
+            </summary>
+        </member>
+        <member name="T:EFCore.API.Models.ValidationError">
+            <summary>
+            Represents a validation error for a specific property in a model or entity.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.ValidationError.Property">
+            <summary>
+            The name of the property that failed validation.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.ValidationError.Error">
+            <summary>
+            The validation error message describing why the property is invalid.
+            </summary>
+        </member>
+        <member name="P:EFCore.API.Models.ValidationError.AttemptedValue">
+            <summary>
+            The value that was attempted to be assigned to the property but failed validation.
+            This helps in debugging by showing what was actually submitted.
+            </summary>
+        </member>
+    </members>
+</doc>
