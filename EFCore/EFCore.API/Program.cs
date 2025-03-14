@@ -10,6 +10,7 @@ using System.IO.Compression;
 using System.Reflection;
 using EFCore.API.Middlewares;
 using System.Text.Json.Serialization;
+using EFCore.API.Helpers;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -68,6 +69,8 @@ try
     #region Dependency Injection
 
     builder.Services.AddTransient<ExceptionHandlerMiddleware>();
+
+    builder.Services.AddSingleton<IHelperFunctions, HelperFunctions>();
 
     #endregion Dependency Injection
 

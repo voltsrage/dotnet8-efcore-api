@@ -4,6 +4,46 @@
         <name>EFCore.API</name>
     </assembly>
     <members>
+        <member name="M:EFCore.API.Controllers.HotelsController.GetHotels(System.Threading.CancellationToken)">
+            <summary>
+            Get all hotels
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.HotelsController.GetHotelById(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get hotel by id
+            </summary>
+            <param name="hotelId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.HotelsController.CreateHotel(EFCore.API.Dtos.Hotels.HotelCreateDto,System.Threading.CancellationToken)">
+            <summary>
+            Create a new hotel
+            </summary>
+            <param name="hotel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.HotelsController.UpdateHotel(System.Int32,EFCore.API.Dtos.Hotels.HotelUpdateDto,System.Threading.CancellationToken)">
+            <summary>
+            Update a hotel
+            </summary>
+            <param name="hotelId"></param>
+            <param name="hotel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.HotelsController.DeleteHotel(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Delete a hotel
+            </summary>
+            <param name="hotelId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:EFCore.API.Data.Repositories.HotelRepository">
             <summary>
             Hotel Repository
@@ -410,6 +450,16 @@
             Validation failed for one or more hotels
             </summary>
         </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelUpdateFailed">
+            <summary>
+            Hotel update failed
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.HotelDeleteFailed">
+            <summary>
+            Hotel delete failed
+            </summary>
+        </member>
         <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomCreated">
             <summary>
             Room created successfully
@@ -479,6 +529,35 @@
             <summary>
             Room creation failed
             </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomUpdateFailed">
+            <summary>
+            Room update failed
+            </summary>
+        </member>
+        <member name="F:EFCore.API.Enums.SystemCodeEnum.RoomDeleteFailed">
+            <summary>
+            Room delete failed
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Helpers.HelperFunctions.ProcessValidation``2(FluentValidation.AbstractValidator{``0},``0,EFCore.API.Models.Response{``1})">
+            <inheritdoc />/>
+        </member>
+        <member name="T:EFCore.API.Helpers.IHelperFunctions">
+            <summary>
+            Represents the helper functions
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Helpers.IHelperFunctions.ProcessValidation``2(FluentValidation.AbstractValidator{``0},``0,EFCore.API.Models.Response{``1})">
+            <summary>
+            Used for model validation
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="V"></typeparam>
+            <param name="validator"></param>
+            <param name="obj"></param>
+            <param name="result"></param>
+            <returns></returns>
         </member>
         <member name="T:EFCore.API.Migrations.InitialMigration">
             <inheritdoc />
@@ -688,6 +767,193 @@
             The value that was attempted to be assigned to the property but failed validation.
             This helps in debugging by showing what was actually submitted.
             </summary>
+        </member>
+        <member name="M:EFCore.API.Services.HotelService.CreateAsync(EFCore.API.Dtos.Hotels.HotelCreateDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Services.HotelService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Services.HotelService.GetAllAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Services.HotelService.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Services.HotelService.GetByNameAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Services.HotelService.GetHotelByNameAndAddress(System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Services.HotelService.UpdateAsync(System.Int32,EFCore.API.Dtos.Hotels.HotelUpdateDto)">
+            <inheritdoc />
+        </member>
+        <member name="T:EFCore.API.Services.Interfaces.IHotelService">
+            <summary>
+            Interface for Hotel Service
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get all hotels
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get hotel by id
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetByNameAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get hotel by name
+            </summary>
+            <param name="name"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetHotelByNameAndAddress(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get hotel by address and name
+            </summary>
+            <param name="name"></param>
+            <param name="address"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.CreateAsync(EFCore.API.Dtos.Hotels.HotelCreateDto)">
+            <summary>
+            Create a new hotel
+            </summary>
+            <param name="hotel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.UpdateAsync(System.Int32,EFCore.API.Dtos.Hotels.HotelUpdateDto)">
+            <summary>
+            Update a hotel
+            </summary>
+            <param name="hotelId"></param>
+            <param name="hotel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Delete a hotel
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EFCore.API.Services.Interfaces.IRoomService">
+            <summary>
+            Interface for Room Service
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get all rooms
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get room by id
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.GetByRoomNumberAndHotelIdAsync(System.String,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get room by room number and hotel id
+            </summary>
+            <param name="roomNumber"></param>
+            <param name="hotelId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.GetByHotelIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get room by hotel id
+            </summary>
+            <param name="hotelId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.CreateAsync(EFCore.API.Dtos.Rooms.RoomCreateDto)">
+            <summary>
+            Create a new room
+            </summary>
+            <param name="room"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.UpdateAsync(System.Int32,EFCore.API.Dtos.Rooms.RoomUpdateDto)">
+            <summary>
+            Update a room
+            </summary>
+            <param name="roomId"></param>
+            <param name="room"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.UpdateAvailabilityAsync(System.Int32,System.Boolean)">
+            <summary>
+            Update room availability    
+            </summary>
+            <param name="id"></param>
+            <param name="isAvailable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.GetAllRoomTypesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Get all room types
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IRoomService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Delete a room
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EFCore.API.Services.RoomService">
+            <summary>
+            Service for Room
+            </summary>
+        </member>
+        <member name="M:EFCore.API.Services.RoomService.CreateAsync(EFCore.API.Dtos.Rooms.RoomCreateDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:EFCore.API.Services.RoomService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:EFCore.API.Services.RoomService.GetAllAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:EFCore.API.Services.RoomService.GetAllRoomTypesAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:EFCore.API.Services.RoomService.GetByHotelIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:EFCore.API.Services.RoomService.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:EFCore.API.Services.RoomService.GetByRoomNumberAndHotelIdAsync(System.String,System.Int32,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:EFCore.API.Services.RoomService.UpdateAsync(System.Int32,EFCore.API.Dtos.Rooms.RoomUpdateDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:EFCore.API.Services.RoomService.UpdateAvailabilityAsync(System.Int32,System.Boolean)">
+            <inheritdoc/>
         </member>
     </members>
 </doc>

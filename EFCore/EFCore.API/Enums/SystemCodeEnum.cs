@@ -72,7 +72,17 @@ namespace EFCore.API.Enums
         /// <summary>
         /// Validation failed for one or more hotels
         /// </summary>
-        public static readonly SystemCodeEnum HotelBulkCreateValidationError = new(3058, "Validation failed for one or more hotels", HttpStatusCode.BadRequest);
+        public static readonly SystemCodeEnum HotelBulkCreateValidationError = new(3058, "Validation failed for one or more hotels", HttpStatusCode.InternalServerError);
+
+        /// <summary>
+        /// Hotel update failed
+        /// </summary>
+        public static readonly SystemCodeEnum HotelUpdateFailed = new(3059, "Hotel Update Failed", HttpStatusCode.InternalServerError);
+
+        /// <summary>
+        /// Hotel delete failed
+        /// </summary>
+        public static readonly SystemCodeEnum HotelDeleteFailed = new(3060, "Hotel Delete Failed", HttpStatusCode.InternalServerError);
 
 
         #endregion
@@ -150,7 +160,17 @@ namespace EFCore.API.Enums
         /// <summary>
         /// Room creation failed
         /// </summary>
-        public static readonly SystemCodeEnum RoomCreationFailed = new(3159, "Room Creation Failed", HttpStatusCode.BadRequest);
+        public static readonly SystemCodeEnum RoomCreationFailed = new(3159, "Room Creation Failed", HttpStatusCode.InternalServerError);
+
+        /// <summary>
+        /// Room update failed
+        /// </summary>
+        public static readonly SystemCodeEnum RoomUpdateFailed = new(3160, "Room Update Failed", HttpStatusCode.InternalServerError);
+
+        /// <summary>
+        /// Room delete failed
+        /// </summary>
+        public static readonly SystemCodeEnum RoomDeleteFailed = new(3161, "Room Delete Failed", HttpStatusCode.InternalServerError);
 
         #endregion
 

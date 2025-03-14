@@ -11,7 +11,7 @@ namespace EFCore.API.Dtos.Hotels
         public string Country { get; set; } = string.Empty;
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
-        public DateTime CreateAt { get; set; }
+        public DateTime CreatedAt { get; set; }
         public List<RoomResponseDto> Rooms { get; set; } = new List<RoomResponseDto>();
     }
 }

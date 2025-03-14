@@ -51,6 +51,7 @@ namespace EFCore.API.Data.Repositories
         public async Task<IEnumerable<Room>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await _context.Rooms
+                .Include(h => h.RoomType)
                 .Where(r => r.EntityStatusId == (int)EntityStatusEnum.Active)
                 .ToListAsync(cancellationToken);
         }
@@ -67,6 +68,7 @@ namespace EFCore.API.Data.Repositories
         public async Task<IEnumerable<Room>> GetByHotelIdAsync(int hotelId, CancellationToken cancellationToken = default)
         {
             return await _context.Rooms
+                .Include(h => h.RoomType)
                 .Where(r => r.HotelId == hotelId && r.EntityStatusId == (int)EntityStatusEnum.Active)
                 .ToListAsync(cancellationToken);
         }
@@ -75,6 +77,7 @@ namespace EFCore.API.Data.Repositories
         public async Task<Room?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _context.Rooms
+                .Include(h => h.RoomType)
                 .Where(r => r.Id == id && r.EntityStatusId == (int)EntityStatusEnum.Active)
                 .FirstOrDefaultAsync(cancellationToken);
         }
@@ -83,6 +86,7 @@ namespace EFCore.API.Data.Repositories
         public async Task<Room?> GetByRoomNumberAndHotelIdAsync(string roomNumber, int hotelId, CancellationToken cancellationToken = default)
         {
             return await _context.Rooms
+                .Include(h => h.RoomType)
                 .Where(r => r.RoomNumber == roomNumber && r.HotelId == hotelId && r.EntityStatusId == (int)EntityStatusEnum.Active)
                 .FirstOrDefaultAsync(cancellationToken);
         }
