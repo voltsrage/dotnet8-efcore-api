@@ -5,6 +5,7 @@ using EFCore.API.Models.Pagination;
 using EFCore.API.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Net;
 
 namespace EFCore.API.Controllers
@@ -226,7 +227,7 @@ namespace EFCore.API.Controllers
         }
 
         /// <summary>
-        /// Create a new hotel
+        /// Create a new hotel with rooms
         /// </summary>
         /// <param name="hotel"></param>
         /// <param name="cancellationToken"></param>
@@ -240,6 +241,35 @@ namespace EFCore.API.Controllers
             try
             {
                 result = await _hotelService.CreateHotelWithRooms(hotel);
+                if (result.StatusCode != null)
+                {
+                    return StatusCode(result.StatusCode.Value, result);
+                }
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred during hotel creation");
+                result.ErrorMessage = ex.Message;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a batch of hotels
+        /// </summary>
+        /// <param name="hotels"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPost("batch")]
+        [ProducesResponseType(typeof(Response<List<HotelResponseDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateBatchHotels([FromBody] BatchHotelCreateDto hotels, CancellationToken cancellationToken = default)
+        {
+            var result = new Response<List<HotelResponseDto>>();
+            try
+            {
+                result = await _hotelService.CreateBatchHotels(hotels);
                 if (result.StatusCode != null)
                 {
                     return StatusCode(result.StatusCode.Value, result);

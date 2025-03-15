@@ -58,6 +58,38 @@ namespace EFCore.API.Services
         }
 
         /// <inheritdoc />
+        public async Task<Response<List<HotelResponseDto>>> CreateBatchHotels(BatchHotelCreateDto hotels, CancellationToken cancellationToken = default)
+        {
+            var result = new Response<List<HotelResponseDto>>();
+
+            BatchHotelCreateValidator validator = new BatchHotelCreateValidator(new HotelCreateValidator());
+
+            result = await  _helperFunctions.ProcessValidation<BatchHotelCreateDto, List<HotelResponseDto>>(validator, hotels, result);
+
+            if (!result.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.StatusCode = StatusCodeEnum.BadRequest.Value;
+                return result;
+            }
+
+            foreach (var hotel in hotels.Hotels)
+            {
+                var existingHotel = await _hotelRepository.GetHotelByNameAndAddress(hotel.Name, hotel.Address);
+                if (existingHotel != null)
+                {
+                    return Response<List<HotelResponseDto>>.Failure(SystemCodeEnum.HotelAlreadyExists);
+                }
+            }
+
+            var hotelsToCreate = _mapper.Map<List<Hotel>>(hotels.Hotels);
+
+            var createdHotels = await _hotelRepository.CreateBatchHotels(hotelsToCreate, cancellationToken);
+
+            return Response<List<HotelResponseDto>>.Success(_mapper.Map<List<HotelResponseDto>>(createdHotels));
+        }
+
+        /// <inheritdoc />
         public async Task<Response<HotelResponseDto>> CreateHotelWithRooms(HotelWithRoomsCreateDto hotel, CancellationToken cancellationToken = default)
         {
             var result = new Response<HotelResponseDto>();
@@ -71,6 +103,13 @@ namespace EFCore.API.Services
                 result.IsSuccess = false;
                 result.StatusCode = StatusCodeEnum.BadRequest.Value;
                 return result;
+            }
+
+            var existingHotel = await _hotelRepository.GetHotelByNameAndAddress(hotel.Name, hotel.Address);
+
+            if (existingHotel != null)
+            {
+                return Response<HotelResponseDto>.Failure(SystemCodeEnum.HotelAlreadyExists);
             }
 
             var hotelToCreate = _mapper.Map<Hotel>(hotel);

@@ -67,6 +67,14 @@ namespace EFCore.API.Services.Interfaces
         Task<Response<HotelResponseDto>> CreateHotelWithRooms(HotelWithRoomsCreateDto hotel, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Create multiple hotels
+        /// </summary>
+        /// <param name="hotels"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Response<List<HotelResponseDto>>> CreateBatchHotels(BatchHotelCreateDto hotels, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Update a hotel
         /// </summary>
         /// <param name="hotelId"></param>

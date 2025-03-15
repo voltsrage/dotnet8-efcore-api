@@ -50,9 +50,17 @@
         </member>
         <member name="M:EFCore.API.Controllers.HotelsController.CreateHotelWithRooms(EFCore.API.Dtos.Hotels.HotelWithRoomsCreateDto,System.Threading.CancellationToken)">
             <summary>
-            Create a new hotel
+            Create a new hotel with rooms
             </summary>
             <param name="hotel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.HotelsController.CreateBatchHotels(EFCore.API.Dtos.Hotels.BatchHotelCreateDto,System.Threading.CancellationToken)">
+            <summary>
+            Create a batch of hotels
+            </summary>
+            <param name="hotels"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -961,6 +969,9 @@
         <member name="M:EFCore.API.Services.HotelService.CreateAsync(EFCore.API.Dtos.Hotels.HotelCreateDto)">
             <inheritdoc />
         </member>
+        <member name="M:EFCore.API.Services.HotelService.CreateBatchHotels(EFCore.API.Dtos.Hotels.BatchHotelCreateDto,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:EFCore.API.Services.HotelService.CreateHotelWithRooms(EFCore.API.Dtos.Hotels.HotelWithRoomsCreateDto,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -1043,6 +1054,14 @@
             Create a new hotel with rooms
             </summary>
             <param name="hotel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.CreateBatchHotels(EFCore.API.Dtos.Hotels.BatchHotelCreateDto,System.Threading.CancellationToken)">
+            <summary>
+            Create multiple hotels
+            </summary>
+            <param name="hotels"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
