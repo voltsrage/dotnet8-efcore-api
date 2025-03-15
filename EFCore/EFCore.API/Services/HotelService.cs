@@ -140,6 +140,26 @@ namespace EFCore.API.Services
             return Response<bool>.Success(true);
         }
 
+        /// <summary>
+        /// Delete multiple hotels
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<Response<BulkDeleteResult>> DeleteBatchAsync(BatchHotelDeleteDto ids, CancellationToken cancellationToken = default)
+        {
+            if(ids is null || !ids.HotelIds.Any())
+            {
+                return Response<BulkDeleteResult>.Failure(SystemCodeEnum.HotelNotFound);
+            }
+
+            var result = await _hotelRepository.DeleteBatchAsync(ids.HotelIds, cancellationToken);
+
+            return Response<BulkDeleteResult>.Success(result);
+         
+        }
+
         /// <inheritdoc />
         public async Task<Response<PaginatedResult<HotelResponseDto>>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default)
         {

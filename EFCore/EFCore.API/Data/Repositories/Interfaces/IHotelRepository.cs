@@ -1,5 +1,6 @@
 ﻿using EFCore.API.Dtos.Hotels;
 using EFCore.API.Entities;
+using EFCore.API.Models;
 using EFCore.API.Models.Pagination;
 
 namespace EFCore.API.Data.Repositories.Interfaces
@@ -88,5 +89,13 @@ namespace EFCore.API.Data.Repositories.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Delete multiple hotels
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<BulkDeleteResult> DeleteBatchAsync(IEnumerable<int> ids, CancellationToken cancellationToken = default);
     }
 }

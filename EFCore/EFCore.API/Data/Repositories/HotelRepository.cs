@@ -5,6 +5,7 @@ using EFCore.API.Dtos.Rooms;
 using EFCore.API.Entities;
 using EFCore.API.Enums.StandardEnums;
 using EFCore.API.Extensions;
+using EFCore.API.Models;
 using EFCore.API.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
@@ -260,6 +261,82 @@ namespace EFCore.API.Data.Repositories
                 // Rollback the transaction if any error occurs
                 await transaction.RollbackAsync();
                 throw; // Re-throw the exception to handle it at a higher level
+            }
+        }
+
+        /// <inheritdoc />
+        public async Task<BulkDeleteResult> DeleteBatchAsync(IEnumerable<int> ids, CancellationToken cancellationToken = default)
+        {
+            var result = new BulkDeleteResult
+            {
+                SuccessfullyDeletedIds = new List<int>(),
+                NotFoundIds = new List<int>(),
+                FailedIds = new Dictionary<int, string>()
+            };
+
+            // Skip processing if no IDs provided
+            if (ids == null || !ids.Any())
+                return result;
+
+            // Convert to list to avoid multiple enumerations
+            var idList = ids.ToList();
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                // Find existing hotels that match the provided IDs
+                var hotelsToDelete = await _context.Hotels
+                    .Where(h => idList.Contains(h.Id) && h.EntityStatusId == 1)
+                    .ToListAsync();
+
+                // Identify IDs that were not found
+                var existingIds = hotelsToDelete.Select(h => h.Id).ToList();
+                result.NotFoundIds = idList.Except(existingIds).ToList();
+
+                // Process each hotel individually to track errors
+                foreach (var hotel in hotelsToDelete)
+                {
+                    try
+                    {
+                        // Perform soft delete
+                        hotel.EntityStatusId = (int)EntityStatusEnum.DeletedForEveryone; // Set to Deleted
+                        hotel.UpdatedAt = DateTime.UtcNow;
+
+                        // We don't call SaveChanges for each one to optimize performance
+                        // Changes are tracked by the context
+
+                        // Record successful deletion
+                        result.SuccessfullyDeletedIds.Add(hotel.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Record failure with error message
+                        result.FailedIds.Add(hotel.Id, ex.Message);
+                    }
+                }
+
+                // Save all changes at once
+                await _context.SaveChangesAsync();
+
+                // Commit the transaction
+                await transaction.CommitAsync();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                // If there's an overall error, roll back everything
+                await transaction.RollbackAsync();
+
+                // Move any successfully processed IDs to failed
+                foreach (var id in result.SuccessfullyDeletedIds.ToList())
+                {
+                    result.SuccessfullyDeletedIds.Remove(id);
+                    result.FailedIds.Add(id, "Transaction rolled back: " + ex.Message);
+                }
+
+                return result;
             }
         }
     }

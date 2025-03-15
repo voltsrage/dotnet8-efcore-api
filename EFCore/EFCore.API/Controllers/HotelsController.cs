@@ -342,5 +342,34 @@ namespace EFCore.API.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Delete multiple hotels
+        /// </summary>
+        /// <param name="hotelIds"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpDelete("batch")]
+        [ProducesResponseType(typeof(Response<BulkDeleteResult>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteBatchHotel(BatchHotelDeleteDto hotelIds, CancellationToken cancellationToken = default)
+        {
+            var result = new Response<BulkDeleteResult>();
+            try
+            {
+                result = await _hotelService.DeleteBatchAsync(hotelIds, cancellationToken);
+                if (result.StatusCode != null)
+                {
+                    return StatusCode(result.StatusCode.Value, result);
+                }
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred during hotel deletion");
+                result.ErrorMessage = ex.Message;
+                throw;
+            }
+        }
     }
 }
