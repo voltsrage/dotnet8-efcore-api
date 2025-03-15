@@ -54,7 +54,70 @@ namespace EFCore.API.Services
 
             var createdHotel = await _hotelRepository.CreateAsync(hotelToCreate);
 
-            return Response<HotelResponseDto>.Success(_mapper.Map<HotelResponseDto>(createdHotel));
+            return Response<HotelResponseDto>.Created(_mapper.Map<HotelResponseDto>(createdHotel));
+        }
+
+        /// <inheritdoc />
+        public async Task<Response<List<HotelResponseDto>>> CreateBatchHotels(BatchHotelCreateDto hotels, CancellationToken cancellationToken = default)
+        {
+            var result = new Response<List<HotelResponseDto>>();
+
+            BatchHotelCreateValidator validator = new BatchHotelCreateValidator(new HotelCreateValidator());
+
+            result = await  _helperFunctions.ProcessValidation<BatchHotelCreateDto, List<HotelResponseDto>>(validator, hotels, result);
+
+            if (!result.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.StatusCode = StatusCodeEnum.BadRequest.Value;
+                return result;
+            }
+
+            foreach (var hotel in hotels.Hotels)
+            {
+                var existingHotel = await _hotelRepository.GetHotelByNameAndAddress(hotel.Name, hotel.Address);
+                if (existingHotel != null)
+                {
+                    return Response<List<HotelResponseDto>>.Failure(SystemCodeEnum.HotelAlreadyExists);
+                }
+            }
+
+            var hotelsToCreate = _mapper.Map<List<Hotel>>(hotels.Hotels);
+
+            var createdHotels = await _hotelRepository.CreateBatchHotels(hotelsToCreate, cancellationToken);
+
+            return Response<List<HotelResponseDto>>.Success(_mapper.Map<List<HotelResponseDto>>(createdHotels));
+        }
+
+        /// <inheritdoc />
+        public async Task<Response<HotelResponseDto>> CreateHotelWithRooms(HotelWithRoomsCreateDto hotel, CancellationToken cancellationToken = default)
+        {
+            var result = new Response<HotelResponseDto>();
+
+            HotelWithRoomsCreateValidator validator = new HotelWithRoomsCreateValidator(new RoomForHotelWithRoomCreateValidator());
+
+            result = await _helperFunctions.ProcessValidation<HotelWithRoomsCreateDto, HotelResponseDto>(validator, hotel, result);
+
+            if (!result.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.StatusCode = StatusCodeEnum.BadRequest.Value;
+                return result;
+            }
+
+            var existingHotel = await _hotelRepository.GetHotelByNameAndAddress(hotel.Name, hotel.Address);
+
+            if (existingHotel != null)
+            {
+                return Response<HotelResponseDto>.Failure(SystemCodeEnum.HotelAlreadyExists);
+            }
+
+            var hotelToCreate = _mapper.Map<Hotel>(hotel);
+
+            var createdHotel = await _hotelRepository.CreateHotelWithRooms(hotelToCreate, hotelToCreate.Rooms.ToList(), cancellationToken);
+
+            return Response<HotelResponseDto>.Created(_mapper.Map<HotelResponseDto>(createdHotel));
+
         }
 
         /// <inheritdoc />
@@ -75,6 +138,26 @@ namespace EFCore.API.Services
             }
 
             return Response<bool>.Success(true);
+        }
+
+        /// <summary>
+        /// Delete multiple hotels
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<Response<BulkDeleteResult>> DeleteBatchAsync(BatchHotelDeleteDto ids, CancellationToken cancellationToken = default)
+        {
+            if(ids is null || !ids.HotelIds.Any())
+            {
+                return Response<BulkDeleteResult>.Failure(SystemCodeEnum.HotelNotFound);
+            }
+
+            var result = await _hotelRepository.DeleteBatchAsync(ids.HotelIds, cancellationToken);
+
+            return Response<BulkDeleteResult>.Success(result);
+         
         }
 
         /// <inheritdoc />
@@ -131,6 +214,14 @@ namespace EFCore.API.Services
             }
 
             return Response<HotelResponseDto?>.Success(_mapper.Map<HotelResponseDto>(hotel));
+        }
+
+        /// <inheritdoc />
+        public async Task<Response<PaginatedResult<HotelWithRoomsDto>>> GetHotelsWithRoomsAsync(PaginationRequest request, CancellationToken cancellationToken = default)
+        {
+            var paginatedHotels = await _hotelRepository.GetHotelsWithRoomsAsync(request, cancellationToken);
+
+            return Response<PaginatedResult<HotelWithRoomsDto>>.Success(paginatedHotels);
         }
 
         /// <inheritdoc />
