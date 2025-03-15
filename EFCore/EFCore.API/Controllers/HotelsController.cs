@@ -174,6 +174,12 @@ namespace EFCore.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Get hotel by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet("name/{name}")]
         [ProducesResponseType(typeof(Response<HotelResponseDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
