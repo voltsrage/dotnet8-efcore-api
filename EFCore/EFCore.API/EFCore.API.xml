@@ -40,6 +40,14 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:EFCore.API.Controllers.HotelsController.GetHotelByName(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get hotel by name
+            </summary>
+            <param name="name"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:EFCore.API.Controllers.HotelsController.CreateHotel(EFCore.API.Dtos.Hotels.HotelCreateDto,System.Threading.CancellationToken)">
             <summary>
             Create a new hotel
