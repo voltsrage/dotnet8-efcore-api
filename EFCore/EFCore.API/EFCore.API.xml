@@ -18,6 +18,20 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:EFCore.API.Controllers.HotelsController.GetHotelWithRooms(System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get all hotels
+            </summary>
+            <param name="page"></param>
+            <param name="pageSize"></param>
+            <param name="searchTerm"></param>
+            <param name="sortColumn"></param>
+            <param name="sortDirection"></param>
+            <param name="country"></param>
+            <param name="city"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="M:EFCore.API.Controllers.HotelsController.GetHotelById(System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get hotel by id
@@ -27,6 +41,14 @@
             <returns></returns>
         </member>
         <member name="M:EFCore.API.Controllers.HotelsController.CreateHotel(EFCore.API.Dtos.Hotels.HotelCreateDto,System.Threading.CancellationToken)">
+            <summary>
+            Create a new hotel
+            </summary>
+            <param name="hotel"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Controllers.HotelsController.CreateHotelWithRooms(EFCore.API.Dtos.Hotels.HotelWithRoomsCreateDto,System.Threading.CancellationToken)">
             <summary>
             Create a new hotel
             </summary>
@@ -150,6 +172,12 @@
         <member name="M:EFCore.API.Data.Repositories.HotelRepository.UpdateAsync(EFCore.API.Entities.Hotel)">
             <inheritdoc />
         </member>
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.GetHotelsWithRoomsAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.HotelRepository.CreateHotelWithRooms(EFCore.API.Entities.Hotel,System.Collections.Generic.List{EFCore.API.Entities.Room},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:EFCore.API.Data.Repositories.Interfaces.IHotelRepository">
             <summary>
             Interface for Hotel Repository
@@ -160,6 +188,14 @@
             Get all hotels
             </summary>
             <param name="pagination"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.GetHotelsWithRoomsAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
+            <summary>
+            Get all hotels with their accompanying rooms
+            </summary>
+            <param name="request"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -193,6 +229,23 @@
             Create a new hotel
             </summary>
             <param name="hotel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.CreateHotelWithRooms(EFCore.API.Entities.Hotel,System.Collections.Generic.List{EFCore.API.Entities.Room},System.Threading.CancellationToken)">
+            <summary>
+            Create a new hotel with rooms
+            </summary>
+            <param name="hotel"></param>
+            <param name="rooms"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.CreateBatchHotels(System.Collections.Generic.List{EFCore.API.Entities.Hotel},System.Threading.CancellationToken)">
+            <summary>
+            Create multiple hotels
+            </summary>
+            <param name="hotels"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:EFCore.API.Data.Repositories.Interfaces.IHotelRepository.UpdateAsync(EFCore.API.Entities.Hotel)">
@@ -708,6 +761,18 @@
         <member name="M:EFCore.API.Migrations.AddSeedValuesForHotelsAndRooms.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:EFCore.API.Migrations.UpdateCreateAndDeletionPresets">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Migrations.UpdateCreateAndDeletionPresets.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Migrations.UpdateCreateAndDeletionPresets.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:EFCore.API.Migrations.UpdateCreateAndDeletionPresets.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:EFCore.API.Models.Pagination.PaginatedResult`1">
             <summary>
             Represents a paginated collection of items with metadata
@@ -896,6 +961,9 @@
         <member name="M:EFCore.API.Services.HotelService.CreateAsync(EFCore.API.Dtos.Hotels.HotelCreateDto)">
             <inheritdoc />
         </member>
+        <member name="M:EFCore.API.Services.HotelService.CreateHotelWithRooms(EFCore.API.Dtos.Hotels.HotelWithRoomsCreateDto,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:EFCore.API.Services.HotelService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -911,6 +979,9 @@
         <member name="M:EFCore.API.Services.HotelService.GetHotelByNameAndAddress(System.String,System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:EFCore.API.Services.HotelService.GetHotelsWithRoomsAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:EFCore.API.Services.HotelService.UpdateAsync(System.Int32,EFCore.API.Dtos.Hotels.HotelUpdateDto)">
             <inheritdoc />
         </member>
@@ -924,6 +995,14 @@
             Get all hotels
             </summary>
             <param name="pagination"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.GetHotelsWithRoomsAsync(EFCore.API.Models.Pagination.PaginationRequest,System.Threading.CancellationToken)">
+            <summary>
+            Get all hotels with their accompanying rooms
+            </summary>
+            <param name="request"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
@@ -957,6 +1036,14 @@
             Create a new hotel
             </summary>
             <param name="hotel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EFCore.API.Services.Interfaces.IHotelService.CreateHotelWithRooms(EFCore.API.Dtos.Hotels.HotelWithRoomsCreateDto,System.Threading.CancellationToken)">
+            <summary>
+            Create a new hotel with rooms
+            </summary>
+            <param name="hotel"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:EFCore.API.Services.Interfaces.IHotelService.UpdateAsync(System.Int32,EFCore.API.Dtos.Hotels.HotelUpdateDto)">

@@ -19,6 +19,14 @@ namespace EFCore.API.Services.Interfaces
         Task<Response<PaginatedResult<HotelResponseDto>>> GetAllAsync(PaginationRequest pagination, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Get all hotels with their accompanying rooms
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Response<PaginatedResult<HotelWithRoomsDto>>> GetHotelsWithRoomsAsync(PaginationRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Get hotel by id
         /// </summary>
         /// <param name="id"></param>
@@ -49,6 +57,14 @@ namespace EFCore.API.Services.Interfaces
         /// <param name="hotel"></param>
         /// <returns></returns>
         Task<Response<HotelResponseDto>> CreateAsync(HotelCreateDto hotel);
+
+        /// <summary>
+        /// Create a new hotel with rooms
+        /// </summary>
+        /// <param name="hotel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Response<HotelResponseDto>> CreateHotelWithRooms(HotelWithRoomsCreateDto hotel, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a hotel

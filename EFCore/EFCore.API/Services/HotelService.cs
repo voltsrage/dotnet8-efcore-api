@@ -54,7 +54,31 @@ namespace EFCore.API.Services
 
             var createdHotel = await _hotelRepository.CreateAsync(hotelToCreate);
 
-            return Response<HotelResponseDto>.Success(_mapper.Map<HotelResponseDto>(createdHotel));
+            return Response<HotelResponseDto>.Created(_mapper.Map<HotelResponseDto>(createdHotel));
+        }
+
+        /// <inheritdoc />
+        public async Task<Response<HotelResponseDto>> CreateHotelWithRooms(HotelWithRoomsCreateDto hotel, CancellationToken cancellationToken = default)
+        {
+            var result = new Response<HotelResponseDto>();
+
+            HotelWithRoomsCreateValidator validator = new HotelWithRoomsCreateValidator(new RoomForHotelWithRoomCreateValidator());
+
+            result = await _helperFunctions.ProcessValidation<HotelWithRoomsCreateDto, HotelResponseDto>(validator, hotel, result);
+
+            if (!result.IsSuccess)
+            {
+                result.IsSuccess = false;
+                result.StatusCode = StatusCodeEnum.BadRequest.Value;
+                return result;
+            }
+
+            var hotelToCreate = _mapper.Map<Hotel>(hotel);
+
+            var createdHotel = await _hotelRepository.CreateHotelWithRooms(hotelToCreate, hotelToCreate.Rooms.ToList(), cancellationToken);
+
+            return Response<HotelResponseDto>.Created(_mapper.Map<HotelResponseDto>(createdHotel));
+
         }
 
         /// <inheritdoc />
@@ -131,6 +155,14 @@ namespace EFCore.API.Services
             }
 
             return Response<HotelResponseDto?>.Success(_mapper.Map<HotelResponseDto>(hotel));
+        }
+
+        /// <inheritdoc />
+        public async Task<Response<PaginatedResult<HotelWithRoomsDto>>> GetHotelsWithRoomsAsync(PaginationRequest request, CancellationToken cancellationToken = default)
+        {
+            var paginatedHotels = await _hotelRepository.GetHotelsWithRoomsAsync(request, cancellationToken);
+
+            return Response<PaginatedResult<HotelWithRoomsDto>>.Success(paginatedHotels);
         }
 
         /// <inheritdoc />

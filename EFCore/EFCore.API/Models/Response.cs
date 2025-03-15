@@ -65,6 +65,17 @@ namespace EFCore.API.Models
             };
         }
 
+        public static Response<T> Created(T content, string message = null)
+        {
+            return new Response<T>
+            {
+                IsSuccess = true,
+                Content = content,
+                SuccessMessage = message,
+                StatusCode = StatusCodeEnum.Created.Value
+            };
+        }
+
         public static Response<T> Failure(SystemCodeEnum error, T? content = default)
         {
             return new Response<T>

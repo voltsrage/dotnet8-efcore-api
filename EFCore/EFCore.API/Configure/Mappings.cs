@@ -15,6 +15,12 @@ namespace EFCore.API.Configure
             CreateMap<Hotel, HotelUpdateDto>()
                 .ReverseMap();
 
+            CreateMap<Hotel, HotelWithRoomsDto>()
+                .ReverseMap();
+
+            CreateMap<Hotel, HotelWithRoomsCreateDto>()
+                .ReverseMap();
+
             CreateMap<Hotel, HotelResponseDto>()
                 .ReverseMap();
 

@@ -1,5 +1,6 @@
 ﻿using EFCore.API.Entities;
 using EFCore.API.Entities.BaseModel;
+using EFCore.API.Enums.StandardEnums;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCore.API.Data
@@ -266,7 +267,7 @@ namespace EFCore.API.Data
                 .Entries()
                 .Where(e => e.Entity is IEntity && (
                     e.State == EntityState.Added
-                    || e.State == EntityState.Modified));
+                    || e.State == EntityState.Modified || e.State == EntityState.Deleted));
 
             var now = DateTime.UtcNow;
 
@@ -277,7 +278,13 @@ namespace EFCore.API.Data
 
                 if (entityEntry.State == EntityState.Added)
                 {
+                    ((IEntity)entityEntry.Entity).EntityStatusId = (int)EntityStatusEnum.Active;
                     ((IEntity)entityEntry.Entity).CreatedAt = now;
+                }
+
+                if(entityEntry.State == EntityState.Deleted)
+                {
+                    ((IEntity)entityEntry.Entity).EntityStatusId = (int)EntityStatusEnum.DeletedForEveryone;
                 }
 
                 // You might want to set CreatedBy and UpdatedBy here as well,
